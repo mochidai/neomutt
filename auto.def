@@ -439,6 +439,7 @@ if {[get-define want-gpgme]} {
     define-append LIBS $res
   }
   msg-result $gpgme_version
+  define-feature gpgme
 
   msg-checking "Checking for gpg-error..."
   if {1} {
