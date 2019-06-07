@@ -190,9 +190,8 @@ if {1} {
 
   # Wrapper around pkg-config, to optionally fail is a pkg is not found, and to
   # add the compile/link definitions for the module.
-  rename pkg-config pkg-config-orig
-  proc pkg-config {required module args} {
-    if {[pkg-config-orig $module {*}$args]} {
+  proc pkgconf {required module args} {
+    if {[pkg-config $module {*}$args]} {
 
       # Add only non-duplicate CFLAGS and LDFLAGS
       foreach which {CFLAGS LDFLAGS} {
@@ -403,8 +402,8 @@ if {[get-define want-gpgme]} {
   }
   
   if {[get-define want-pkgconf]} {
-    pkg-config true gpgme >= 1.4.0
-    pkg-config true gpg-error
+    pkgconf true gpgme >= 1.4.0
+    pkgconf true gpg-error
     define-feature gpgme
   } else {
     cc-with [list -cflags $gpgme_cflags] {
@@ -472,7 +471,7 @@ if {[get-define want-smime]} {
 # SASL
 if {[get-define want-sasl]} {
   if {[get-define want-pkgconf]} {
-    pkg-config true libsasl2
+    pkgconf true libsasl2
     # RHEL6 doesn't have this function yet
     cc-check-functions sasl_client_done
     define USE_SASL
@@ -513,7 +512,7 @@ if {[get-define want-testing]} {
 if {[get-define want-lua]} {
 
   if {[get-define want-pkgconf]} {
-    if {![pkg-config false lua-5.3] && ![pkg-config false lua-5.2]} {
+    if {![pkgconf false lua-5.3] && ![pkgconf false lua-5.2]} {
       user-error "Unable to find LUA"
     }
     define USE_LUA
@@ -711,7 +710,7 @@ if {[opt-val with-domain] ne {}} {
 # TLS support
 if {[get-define want-ssl] && ![get-define want-gnutls]} {
   # OpenSSL
-  if {[get-define want-pkgconf] && [pkg-config false openssl]} {
+  if {[get-define want-pkgconf] && [pkgconf false openssl]} {
     # cool - we do not make pkg-config mandatory for OpenSSL because BSDs still
     # ship OpenSSL in the base system. Those aren't available through
     # pkg-config.
@@ -742,7 +741,7 @@ if {[get-define want-ssl] && ![get-define want-gnutls]} {
 } elseif {[get-define want-gnutls]} {
   # GnuTLS
   if {[get-define want-pkgconf]} {
-    pkg-config true gnutls
+    pkgconf true gnutls
   } else {
     set gnutls_prefix [opt-val with-gnutls $prefix]
     cc-with [list -cflags -I$gnutls_prefix/include -libs -L$gnutls_prefix/lib] {
@@ -775,7 +774,7 @@ if {[get-define want-idn] && [get-define want-idn2]} {
 }
 if {[get-define want-idn]} {
   if {[get-define want-pkgconf]} {
-    pkg-config true libidn
+    pkgconf true libidn
     # These are used to figure which header to include
     if {!([cc-check-includes stringprep.h] || [cc-check-includes idn/stringprep.h]) ||
         !([cc-check-includes idna.h] || [cc-check-includes idn/idna.h])} {
@@ -801,7 +800,7 @@ if {[get-define want-idn]} {
   define-feature libidn
 } elseif {[get-define want-idn2]} {
   if {[get-define want-pkgconf]} {
-    pkg-config true libidn2
+    pkgconf true libidn2
   } else {
     set idn_prefix [opt-val with-idn2 $prefix]
     cc-with [list -cflags -I$idn_prefix/include -libs -L$idn_prefix/lib] {
@@ -904,7 +903,7 @@ if {[get-define want-lmdb]} {
 # Header cache - KyotoCabinet
 if {[get-define want-kyotocabinet]} {
   if {[get-define want-pkgconf]} {
-    pkg-config true kyotocabinet
+    pkgconf true kyotocabinet
     define-feature kc
   } else {
     if {![check-inc-and-lib kc [opt-val with-kyotocabinet $prefix] \
@@ -920,7 +919,7 @@ if {[get-define want-kyotocabinet]} {
 # Header cache - QDBM
 if {[get-define want-qdbm]} {
   if {[get-define want-pkgconf]} {
-    pkg-config true qdbm
+    pkgconf true qdbm
     define-feature qdbm
   } else {
     # On Linux, headers are in a dedicated subdirectory
@@ -945,7 +944,7 @@ if {[get-define want-qdbm]} {
 # Header Cache - TokyoCabinet
 if {[get-define want-tokyocabinet]} {
   if {[get-define want-pkgconf]} {
-    pkg-config true tokyocabinet
+    pkgconf true tokyocabinet
     define-feature tc
   } else {
     if {![check-inc-and-lib tc [opt-val with-tokyocabinet $prefix] \
