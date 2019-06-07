@@ -437,11 +437,41 @@ if {[get-define want-gpgme]} {
       user-error "Could not derive --libs from $gpgme_config"
     }
     define-append LIBS $res
-
   }
   msg-result $gpgme_version
 
-  define-feature gpgme
+  msg-checking "Checking for gpg-error..."
+  if {1} {
+    # Locate gpg-error-config
+    set gpg_error_config_guess [file join $gpgme_prefix bin gpg-error-config]
+    if {[file-isexec $gpg_error_config_guess]} {
+      define GPG-ERROR-CONFIG $gpg_error_config_guess
+    } else {
+      if {![cc-check-progs gpg-error-config]} {
+        user-error "Unable to find gpg-error-config"
+      }
+    }
+    set gpg_error_config [get-define GPG-ERROR-CONFIG]
+
+    # Version
+    if {[catch {exec-with-stderr $gpg_error_config --version} gpg_error_version err]} {
+      user-error "Could not derive --version from $gpg_error_config"
+    }
+
+    # CFLAGS
+    if {[catch {exec-with-stderr $gpg_error_config --cflags} res err]} {
+      user-error "Could not derive --cflags from $gpg_error_config"
+    }
+    define-append CFLAGS $res
+    
+    # LIBS
+    if {[catch {exec-with-stderr $gpg_error_config --libs} res err]} {
+      user-error "Could not derive --libs from $gpg_error_config"
+    }
+    define-append LIBS $res
+  }
+  msg-result $gpg_error_version
+
   define CRYPT_BACKEND_GPGME
 }
 
