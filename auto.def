@@ -396,50 +396,82 @@ if {[get-define want-full-doc]} {define MAKEDOC_FULL}
 ###############################################################################
 # GPGME
 if {[get-define want-gpgme]} {
-  set gpgme_cflags {}
   if {[is-defined _FILE_OFFSET_BITS]} {
-    set gpgme_cflags -D_FILE_OFFSET_BITS=[get-define _FILE_OFFSET_BITS]
+    define-append CFLAGS -D_FILE_OFFSET_BITS=[get-define _FILE_OFFSET_BITS]
   }
-  
-  if {[get-define want-pkgconf]} {
-    pkgconf true gpgme >= 1.4.0
-    pkgconf true gpg-error
-    define-feature gpgme
-  } else {
-    cc-with [list -cflags $gpgme_cflags] {
-      if {![check-inc-and-lib gpgme [opt-val with-gpgme $prefix] \
-                              gpgme.h gpgme_new gpgme]} {
-        user-error "Unable to find GPGME"
-      }
-      set gpg_ver {}
-      foreach path [list [opt-val with-gpgme $prefix] /usr] {
-        set incfile [file join $path include gpgme.h]
-        if {![file exists $incfile]} {
-          continue
-        }
-        set gpg_ver [check-define-value $incfile GPGME_VERSION_NUMBER]
-        if {$gpg_ver eq {}} {
-          user-error "Unable to find GPGME version number"
-        }
-        set req_ver [format "0x%02x%02x%02x" 1 4 0]
-        if {$req_ver > $gpg_ver} {
-          user-error "Found GPGME version $gpg_ver, need $req_ver"
-        }
 
-        # If libgpg-error's version is at least 1.33.0, we use gpgrt_cmp_version
-        # from it, so we need to add it to our link line.
-        # See https://github.com/neomutt/neomutt/issues/1493.
-        set gpgrt_ver [check-define-value $incfile GPGRT_VERSION_NUMBER]
-        set gpgrt_req_ver [format "0x%02x%02x%02x" 1 33 0]
-        if {$gpgrt_ver ne {} && $gpgrt_ver >= $gpgrt_req_ver} {
-          define-append LIBS -lgpg-error
-        }
-      }
-      if {$gpg_ver eq {}} {
-        user-error "Unable to find GPGME"
+  msg-checking "Checking for GPGMe..."
+  if {1} {
+    # Locate gpgme-config
+    set gpgme_prefix [opt-val with-gpgme $prefix]
+    set gpgme_config_guess [file join $gpgme_prefix bin gpgme-config]
+    if {[file-isexec $gpgme_config_guess]} {
+      define GPGME-CONFIG $gpgme_config_guess
+    } else {
+      if {![cc-check-progs gpgme-config]} {
+        user-error "Unable to find gpgme-config"
       }
     }
+    set gpgme_config [get-define GPGME-CONFIG]
+
+    # Version
+    if {[catch {exec-with-stderr $gpgme_config --version} gpgme_version err]} {
+      user-error "Could not derive --version from $gpgme_config"
+    }
+    if {[scan $gpgme_version "%d.%d.%d" gpgme_maj gpgme_min gpgme_patch] != 3} {
+      user-error "Could not parse GPGMe version $gpgme_version"
+    }
+    if {$gpgme_maj < 1 || $gpgme_min < 4} {
+      user-error "Found GPGME version $gpgme_version, need 1.4.0"
+    }
+    define GPGME_VERSION_NUMBER [format "0x%02x%02x%02x" $gpgme_maj $gpgme_min $gpgme_patch]
+
+    # CFLAGS
+    if {[catch {exec-with-stderr $gpgme_config --cflags} res err]} {
+      user-error "Could not derive --cflags from $gpgme_config"
+    }
+    define-append CFLAGS $res
+
+    # LIBS
+    if {[catch {exec-with-stderr $gpgme_config --libs} res err]} {
+      user-error "Could not derive --libs from $gpgme_config"
+    }
+    define-append LIBS $res
   }
+  msg-result $gpgme_version
+
+  msg-checking "Checking for gpg-error..."
+  if {1} {
+    # Locate gpg-error-config
+    set gpg_error_config_guess [file join $gpgme_prefix bin gpg-error-config]
+    if {[file-isexec $gpg_error_config_guess]} {
+      define GPG-ERROR-CONFIG $gpg_error_config_guess
+    } else {
+      if {![cc-check-progs gpg-error-config]} {
+        user-error "Unable to find gpg-error-config"
+      }
+    }
+    set gpg_error_config [get-define GPG-ERROR-CONFIG]
+
+    # Version
+    if {[catch {exec-with-stderr $gpg_error_config --version} gpg_error_version err]} {
+      user-error "Could not derive --version from $gpg_error_config"
+    }
+
+    # CFLAGS
+    if {[catch {exec-with-stderr $gpg_error_config --cflags} res err]} {
+      user-error "Could not derive --cflags from $gpg_error_config"
+    }
+    define-append CFLAGS $res
+    
+    # LIBS
+    if {[catch {exec-with-stderr $gpg_error_config --libs} res err]} {
+      user-error "Could not derive --libs from $gpg_error_config"
+    }
+    define-append LIBS $res
+  }
+  msg-result $gpg_error_version
+
   define CRYPT_BACKEND_GPGME
 }
 
