@@ -203,7 +203,7 @@ if {1} {
       }
       # Order of libraries matter, so we cannot skip duplicates
       define-append LIBS [pkg-config-get $module LIBS]
-    } elseif {[string is true $required]} {
+    } elseif {[string is bool $required] && $required} {
       user-error "$module $args"
     }
 
