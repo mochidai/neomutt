@@ -203,11 +203,12 @@ if {1} {
       }
       # Order of libraries matter, so we cannot skip duplicates
       define-append LIBS [pkg-config-get $module LIBS]
+      return 1
     } elseif {[string is bool $required] && $required} {
       user-error "$module $args"
+    } else {
+      return 0
     }
-
-    return 1
   }
 }
 ###############################################################################
@@ -545,7 +546,7 @@ if {[get-define want-testing]} {
 if {[get-define want-lua]} {
 
   if {[get-define want-pkgconf]} {
-    if {![pkgconf false lua-5.3] && ![pkgconf false lua-5.2]} {
+    if {![pkgconf false lua] && ![pkgconf false lua-5.3] && ![pkgconf false lua-5.2]} {
       user-error "Unable to find LUA"
     }
     define USE_LUA
