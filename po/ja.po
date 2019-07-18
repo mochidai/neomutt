@@ -5,6 +5,7 @@
 #
 # OOTA Toshiya <ribbon@users.sourceforge.net>, 2002, 2008, 2011
 # TAKAHASHI Tamotsu <ttakah@lapis.plala.or.jp>, 2002-2005, 2007-2009, 2011, 2013, 2015-2018
+# Dai Mochinaga <mochidai@mochidai.com>, 2019
 #
 msgid ""
 msgstr ""
@@ -150,7 +151,7 @@ msgstr "%s の購読を取り消した"
 
 #: browser.c:100 index.c:130
 msgid "Catchup"
-msgstr ""
+msgstr "キャッチアップする"
 
 #: browser.c:743 browser.c:1366 browser.c:1740
 #, c-format
@@ -709,7 +710,7 @@ msgstr "  暗号化方式: "
 
 #: compose.c:370
 msgid "<no chain defined>"
-msgstr ""
+msgstr "<chainが定義されていない>"
 
 #: compose.c:414
 #, c-format
@@ -751,15 +752,15 @@ msgstr "添付ファイルはコマンドを通してある。"
 
 #: compose.c:1171
 msgid "Grouping 'alternatives' requires at least 2 tagged messages"
-msgstr ""
+msgstr "'alternatives'をグループにするには2つ以上のタグ付けされたメッセージが必要です。"
 
 #: compose.c:1253
 msgid "Grouping 'multilingual' requires at least 2 tagged messages"
-msgstr ""
+msgstr "'multilingual'をグループにするには2つ以上のタグ付けされたメッセージが必要です。"
 
 #: compose.c:1266
 msgid "Not all parts have 'Content-Language' set, continue?"
-msgstr ""
+msgstr "'Content-Language'が設定されていません。続けますか？"
 
 #: compose.c:1268
 #, fuzzy
@@ -816,7 +817,7 @@ msgstr "現在の添付ファイルは変換される。"
 
 #: compose.c:1618
 msgid "Empty 'Content-Language'"
-msgstr ""
+msgstr "'Content-Language'が空です。"
 
 #: compose.c:1636
 msgid "Invalid encoding"
@@ -1267,11 +1268,11 @@ msgstr "%s へのトンネルがエラー %d (%s) を返した"
 #, c-format
 msgid "The length calculation was wrong by %ld byte"
 msgid_plural "The length calculation was wrong by %ld bytes"
-msgstr[0] ""
+msgstr[0] "計算の結果、%ld バイト分の長さがおかしい。"
 
 #: copy.c:737
 msgid "No decryption engine available for message"
-msgstr ""
+msgstr "暗号化されたメッセージに対する利用可能な復号化エンジンがない"
 
 #: curs_lib.c:335
 msgid "yes"
@@ -2107,7 +2108,7 @@ msgstr "鍵ID入力: "
 
 #: index.c:1378
 msgid "Article has no parent reference"
-msgstr ""
+msgstr "この記事は参照先がない"
 
 #: index.c:1402
 #, fuzzy
@@ -2253,7 +2254,7 @@ msgstr "無題で中止する。"
 
 #: index.c:2144 index.c:2165
 msgid "Windowed queries disabled"
-msgstr ""
+msgstr "Windowed queriesは利用不可能です"
 
 #: index.c:2149 index.c:2170
 msgid "No notmuch vfolder currently loaded"
@@ -3018,17 +3019,17 @@ msgstr "シグナル %d を受け取った。終了。\n"
 #: muttlib.c:475
 #, c-format
 msgid "mutt_randbuf buflen=%zu"
-msgstr ""
+msgstr "mutt_randbuf buflen=%zu"
 
 #: muttlib.c:495
 #, c-format
 msgid "open /dev/urandom: %s"
-msgstr ""
+msgstr "開く /dev/urandom: %s "
 
 #: muttlib.c:502
 #, c-format
 msgid "read /dev/urandom: %s"
-msgstr ""
+msgstr "読む /dev/urandom: %s"
 
 # 参考: "Save to file: " => "保存するファイル: " (alias.c, recvattach.c)
 #. L10N: Means "The path you specified as the destination file is a directory."
@@ -3192,7 +3193,7 @@ msgstr "変数 %s には不正な値: \"%s\""
 
 #: mutt_lua.c:417
 msgid "Error: Couldn't load the lua interpreter"
-msgstr ""
+msgstr "lua インタプリタを読み込めない。"
 
 #: mutt_lua.c:483
 #, fuzzy, c-format
@@ -3443,7 +3444,7 @@ msgstr "データオブジェクト巻き戻しエラー: %s"
 
 #: ncrypt/crypt_gpgme.c:916
 msgid "[tempfile]"
-msgstr ""
+msgstr "[tempfile]"
 
 #: ncrypt/crypt_gpgme.c:922 ncrypt/crypt_gpgme.c:974
 #, c-format
@@ -3562,7 +3563,7 @@ msgstr "鍵ID "
 #. if the S/MIME key has no ID. This is quite an error.
 #: ncrypt/crypt_gpgme.c:1837
 msgid "no signature fingerprint available"
-msgstr ""
+msgstr "利用できるフィンガープリントがない"
 
 #: ncrypt/crypt_gpgme.c:1846 ncrypt/crypt_gpgme.c:1851
 msgid "created: "
@@ -4514,12 +4515,12 @@ msgstr "%s は不正な POP パス"
 #: nntp/nntp.c:2479
 #, c-format
 msgid "Newsgroup %s not found on the server"
-msgstr ""
+msgstr "ニュースグループ %s はサーバ上に見つからなかった。"
 
 #: nntp/nntp.c:2501
 #, c-format
 msgid "Newsgroup %s has been removed from the server"
-msgstr ""
+msgstr "ニュースグループ %s はサーバから削除された。"
 
 #: nntp/nntp.c:2767
 #, c-format
@@ -4606,7 +4607,7 @@ msgstr "メッセージを他のユーザに再送"
 
 #: opcodes.h:34
 msgid "swap the current folder position with $folder if it exists"
-msgstr ""
+msgstr "現在のフォルダ位置を $folder が存在すれば入れ替える"
 
 #: opcodes.h:35
 msgid "select a new file in this directory"
@@ -4744,11 +4745,11 @@ msgstr "添付ファイルの一時的なコピーを作成"
 
 #: opcodes.h:66
 msgid "group tagged attachments as 'multipart/alternative'"
-msgstr ""
+msgstr "'multipart/alternative'としてタグ付けされた添付ファイルをグループ化"
 
 #: opcodes.h:67
 msgid "group tagged attachments as 'multipart/multilingual'"
-msgstr ""
+msgstr "'multipart/multilingual'としてタグ付けされた添付ファイルをグループ化"
 
 #: opcodes.h:68
 msgid "run ispell on the message"
@@ -4980,7 +4981,7 @@ msgstr "元のメッセージを編集、読み取り専用の場合は閲覧の
 
 #: opcodes.h:123
 msgid "edit the raw message (edit and edit-raw-message are synonyms)"
-msgstr ""
+msgstr "元のメッセージを編集（edt と edit-raw-message は同じ）"
 
 #: opcodes.h:124
 msgid "edit attachment content type"
@@ -5569,11 +5570,11 @@ msgstr "クエリから読み取り専用のバーチャルフォルダを作成
 
 #: opcodes.h:277
 msgid "shifts virtual folder time window backwards"
-msgstr ""
+msgstr "バーチャルフォルダの時間区間を後ろにシフトする"
 
 #: opcodes.h:278
 msgid "shifts virtual folder time window forwards"
-msgstr ""
+msgstr "バーチャルフォルダの時間区間を前にシフトする"
 
 #: opcodes.h:284
 msgid "check for classic PGP"
@@ -5664,13 +5665,13 @@ msgstr "次"
 #. L10N: Status bar message: all the emails are visible in the index
 #: pager.c:2169 status.c:266
 msgid "all"
-msgstr ""
+msgstr "すべて"
 
 #. L10N: Status bar message: the end of the email is visible in the pager
 #. L10N: Status bar message: the end of the list emails is visible in the index
 #: pager.c:2171 status.c:264
 msgid "end"
-msgstr ""
+msgstr "末尾"
 
 #: pager.c:2522 pager.c:2556 pager.c:2592 pager.c:2928
 msgid "Bottom of message is shown"
@@ -5733,7 +5734,7 @@ msgstr "未読メッセージがない。"
 
 #: pattern.c:991
 msgid "No Context"
-msgstr ""
+msgstr "本文なし"
 
 #: pattern.c:1115
 #, fuzzy
@@ -6125,7 +6126,7 @@ msgstr "message/rfc822 パートのみ再送してもよい。"
 
 #: remailer.c:195
 msgid "<random>"
-msgstr ""
+msgstr "<ランダム>"
 
 #: remailer.c:548
 msgid "Append"
@@ -6285,7 +6286,7 @@ msgstr "Fccに失敗. (r)etry 再試行, alternate (m)ailbox 別のメールボ�
 #. Any similarity to famous leaders of the FSF is coincidental.
 #: send.c:1665
 msgid "rms"
-msgstr ""
+msgstr "(r)etry 再試行, alternate (m)ailbox 別のメールボックス, (s)kip スキップ"
 
 #. L10N: This is the prompt to enter an "alternate (m)ailbox" when the
 #. initial Fcc fails.
@@ -6296,7 +6297,7 @@ msgstr "メールボックスの指定がない。\n"
 
 #: send.c:1733
 msgid "Can't postpone.  $postponed is unset"
-msgstr ""
+msgstr "書きかけとして一時保存できない。変数 $postponed を設定していない。"
 
 #: send.c:1862
 msgid "Recall postponed message?"
@@ -6476,6 +6477,8 @@ msgid ""
 "Many others not mentioned here contributed code, fixes,\n"
 "and suggestions.\n"
 msgstr ""
+"コードへの貢献、修正、提案をしていただいた多くの方々に\n"
+"ついて、ここでは言及していません"
 
 #: version.c:74
 #, fuzzy
